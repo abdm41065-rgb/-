@@ -8,6 +8,13 @@ const allowedOrigins = new Set([
   'http://localhost:3000',
 ])
 const requests = new Map<string, { count: number; resetAt: number }>()
+const MESSAGE_LIMIT = 15
+
+async function sha256(value: string) {
+  const bytes = new TextEncoder().encode(value)
+  const digest = await crypto.subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('')
+}
 
 function cors(origin: string | null) {
   return {
@@ -34,9 +41,17 @@ Deno.serve(async (req: Request) => {
   try {
     const body = await req.json()
     const message = String(body?.message || '').trim().slice(0, 500)
+    const clientId = String(body?.clientId || '').trim()
     if (!message) return new Response(JSON.stringify({ error: 'الرسالة مطلوبة' }), { status: 400, headers })
+    if (!/^[0-9a-f-]{36}$/i.test(clientId)) return new Response(JSON.stringify({ error: 'معرّف المستخدم غير صالح' }), { status: 400, headers })
 
     const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false } })
+    const clientHash = await sha256(`${clientId}:${ip}`)
+    const { data: quotaRows, error: quotaError } = await supabase.rpc('consume_chat_message', { p_client_hash: clientHash, p_limit: MESSAGE_LIMIT })
+    if (quotaError) throw quotaError
+    const quota = Array.isArray(quotaRows) ? quotaRows[0] : quotaRows
+    if (!quota?.allowed) return new Response(JSON.stringify({ error: 'لقد استخدمت الحد الأقصى للمساعد وهو 15 رسالة.', remaining: 0, limit: MESSAGE_LIMIT }), { status: 429, headers })
+
     const { data: products, error } = await supabase.from('products').select('name,category,price,old_price,stock,description').order('featured', { ascending: false }).limit(250)
     if (error) throw error
     const catalog = (products || []).map((p) => `${p.name} | ${p.category} | ${p.price} د.ع | المخزون ${p.stock} | ${p.description || ''}`).join('\n')
@@ -65,7 +80,7 @@ Deno.serve(async (req: Request) => {
         : 'لا توجد منتجات مطابقة متوفرة حاليًا. يمكنك التواصل معنا عبر واتساب للمساعدة.'
     }
     if (!reply) throw new Error('No assistant response')
-    return new Response(JSON.stringify({ reply }), { headers })
+    return new Response(JSON.stringify({ reply, remaining: Number(quota.remaining ?? 0), limit: MESSAGE_LIMIT }), { headers })
   } catch (error) {
     console.error(error)
     return new Response(JSON.stringify({ error: 'تعذر تشغيل المساعد الآن' }), { status: 500, headers })
