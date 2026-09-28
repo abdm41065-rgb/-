@@ -2,7 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts'
 import { createClient } from 'npm:@supabase/supabase-js@2.115.0'
 
 const allowedOrigins = new Set([
-  'https://squid-app-4wjgx.ondigitalocean.app',
+  'https://hayat-almajd-pharmacy-qfzbr.ondigitalocean.app',
   'https://hayat-almajd-pharmacy.netlify.app',
   'http://localhost:4173',
   'http://localhost:3000',
@@ -18,7 +18,7 @@ async function sha256(value: string) {
 
 function cors(origin: string | null) {
   return {
-    'Access-Control-Allow-Origin': origin && allowedOrigins.has(origin) ? origin : 'https://squid-app-4wjgx.ondigitalocean.app',
+    'Access-Control-Allow-Origin': origin && allowedOrigins.has(origin) ? origin : 'https://hayat-almajd-pharmacy-qfzbr.ondigitalocean.app',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json; charset=utf-8',
