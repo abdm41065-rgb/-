@@ -112,7 +112,7 @@ export default function Home() {
     {view==='store'?<>
       <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero mx-auto max-w-7xl px-4 pt-5 md:px-8 md:pt-8">
         <div className="hero-panel premium-hero relative min-h-[430px] overflow-hidden rounded-[2.4rem] bg-[#dceeff] md:min-h-[570px]">
-          <img src="/hayat-hero-products-mini.jpg" alt="مجموعة منتجات عناية من صيدلية حياة المجد" width="900" height="506" loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-[65%_center]"/>
+          <img src="/hayat-hero-luxury-v2.jpg" alt="مجموعة فاخرة من منتجات العناية من صيدلية حياة المجد" width="1600" height="900" loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-center"/>
           <div className="hero-wash absolute inset-0"/>
           <div className="hero-orb hero-orb-one"/><div className="hero-orb hero-orb-two"/>
           <div className="relative z-10 flex min-h-[430px] max-w-[670px] flex-col justify-center p-7 md:min-h-[570px] md:p-16">
