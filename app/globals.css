@@ -109,7 +109,13 @@ img { display:block; }
 @media (max-width:640px) {
   .storefront-hero { padding:0; }
   .hero-panel { min-height:510px; border-radius:0 0 1.75rem 1.75rem; }
-  .hero-slide { object-position:50% center; }
+  /* Keep every model's full face inside the narrow mobile crop. The source
+     artwork places the subject on the right before the RTL mirror. */
+  .hero-slide { object-position:70% center; }
+  .hero-slide:nth-child(1) { object-position:72% center; }
+  .hero-slide:nth-child(2) { object-position:70% center; }
+  .hero-slide:nth-child(3) { object-position:70% center; }
+  .hero-slide:nth-child(4) { object-position:68% center; }
   .hero-panel > .hero-wash { display:none; }
   .hero-copy { min-height:510px; justify-content:flex-end; padding:1.5rem 1.25rem 4.5rem; text-align:right; }
   .hero-panel h1 { font-size:2.3rem; }
