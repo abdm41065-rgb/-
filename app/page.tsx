@@ -132,15 +132,8 @@ export default function Home() {
     </div><div className="mobile-search-wrap mx-auto max-w-7xl px-3 pb-3 md:hidden"><div className="relative"><Search className="absolute right-4 top-1/2 -translate-y-1/2 text-[#168bc5]" size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن منتج..." aria-label="البحث عن منتج" className="mobile-search-input w-full rounded-2xl py-3 pr-11 pl-4 outline-none"/></div></div></header>
     {view==='store'?<>
       <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero mx-auto max-w-7xl px-4 pt-5 md:px-8 md:pt-8">
-        <div className="hero-panel premium-hero relative min-h-[430px] overflow-hidden rounded-[2.4rem] bg-[#dceeff] md:min-h-[570px]">
+        <div className="hero-panel premium-hero relative overflow-hidden rounded-[2.4rem] bg-[#062b68]">
           <div className="hero-slides absolute inset-0" aria-hidden="true">{heroImages.map((image,index)=><img key={image} src={image} alt="" width="1600" height="900" loading={index===0?'eager':'lazy'} fetchPriority={index===0?'high':'auto'} decoding="async" className={`hero-slide ${index===heroIndex?'is-active':''}`}/>)}</div>
-          <div className="hero-wash absolute inset-0"/>
-          <div className="hero-orb hero-orb-one"/><div className="hero-orb hero-orb-two"/>
-          <div className="hero-copy relative z-10 flex min-h-[430px] max-w-[670px] flex-col justify-center p-7 md:min-h-[570px] md:p-16">
-            <motion.span initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:.18,duration:.45}} className="premium-pill mb-6 w-fit">صيدلية عصرية • عناية موثوقة</motion.span>
-            <motion.h1 initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.25,duration:.65,ease:[.22,1,.36,1]}} className="hero-title text-4xl font-black leading-[1.13] text-[#071d35] md:text-7xl">العناية تبدأ<br/><span>من اختيار أذكى.</span></motion.h1>
-            <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{delay:.45,duration:.5}} className="mt-8 flex flex-wrap gap-3"><motion.button whileHover={reduceMotion?{}:{scale:1.025,y:-2}} whileTap={{scale:.98}} onClick={()=>document.getElementById('products')?.scrollIntoView({behavior:'smooth'})} className="premium-cta inline-flex items-center gap-2 rounded-full px-8 py-4 font-black text-white">اكتشف المجموعة <ArrowLeft size={18}/></motion.button><motion.button whileHover={reduceMotion?{}:{y:-2}} onClick={()=>setChatOpen(true)} className="premium-ghost rounded-full px-7 py-4 font-bold">اسأل المساعد <Sparkles size={17}/></motion.button></motion.div>
-          </div>
           <div className="hero-dots absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">{heroImages.map((_,index)=><button key={index} onClick={()=>setHeroIndex(index)} aria-label={`عرض صورة الهيرو ${index+1}`} className={index===heroIndex?'is-active':''}/>)}</div>
         </div>
         <div className="benefit-strip premium-benefits relative z-20 mx-3 -mt-8 grid grid-cols-2 overflow-hidden rounded-[1.7rem] md:mx-12 md:grid-cols-4">
