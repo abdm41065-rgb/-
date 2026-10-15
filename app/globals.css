@@ -108,17 +108,13 @@ img { display:block; }
 
 @media (max-width:640px) {
   .storefront-hero { padding:0; }
-  .hero-panel { min-height:510px; border-radius:0 0 1.75rem 1.75rem; }
-  /* Keep every model's full face inside the narrow mobile crop. The source
-     artwork places the subject on the right before the RTL mirror. */
-  .hero-slide { object-position:70% center; }
-  .hero-slide:nth-child(1) { object-position:72% center; }
-  .hero-slide:nth-child(2) { object-position:70% center; }
-  .hero-slide:nth-child(3) { object-position:70% center; }
-  .hero-slide:nth-child(4) { object-position:68% center; }
+  .hero-panel { min-height:430px; border-radius:0 0 1.75rem 1.75rem; background:#062b68; }
+  /* On phones, fit the complete artwork instead of enlarging and cropping it.
+     This keeps the model's full face and the product row visible. */
+  .hero-slide { height:52%; object-fit:contain; object-position:center top; }
   .hero-panel > .hero-wash { display:none; }
-  .hero-copy { min-height:510px; justify-content:flex-end; padding:1.5rem 1.25rem 4.5rem; text-align:right; }
-  .hero-panel h1 { font-size:2.3rem; }
+  .hero-copy { min-height:430px; justify-content:flex-end; padding:1.25rem 1.25rem 3.75rem; text-align:right; }
+  .hero-panel h1 { font-size:2rem; }
   .hero-panel p { font-size:.96rem; line-height:1.75; }
   .benefit-strip { margin-inline:.75rem; }
   .benefit-strip > div { min-width:0; padding:.75rem; }
