@@ -55,10 +55,7 @@ const categoryIconMap:Record<string,typeof Sparkles> = {
 };
 const PAGE_SIZE = 24;
 const heroImages = [
-  '/generated-hero-options/woman-products-blue-v1.png',
-  '/generated-hero-options/woman-products-blue-v2.png',
-  '/generated-hero-options/woman-products-blue-v3.png',
-  '/generated-hero-options/woman-products-blue-v4.png',
+  '/hayat-almajd-hero-final.jpg',
 ];
 const productCampaignImages = [
   '/generated-ads/brown-products-navy-landscape-right.png',
@@ -134,7 +131,7 @@ export default function Home() {
       <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero mx-auto max-w-7xl px-4 pt-5 md:px-8 md:pt-8">
         <div className="hero-panel premium-hero relative overflow-hidden rounded-[2.4rem] bg-[#062b68]">
           <div className="hero-slides absolute inset-0" aria-hidden="true">{heroImages.map((image,index)=><img key={image} src={image} alt="" width="1600" height="900" loading={index===0?'eager':'lazy'} fetchPriority={index===0?'high':'auto'} decoding="async" className={`hero-slide ${index===heroIndex?'is-active':''}`}/>)}</div>
-          <div className="hero-dots absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">{heroImages.map((_,index)=><button key={index} onClick={()=>setHeroIndex(index)} aria-label={`عرض صورة الهيرو ${index+1}`} className={index===heroIndex?'is-active':''}/>)}</div>
+          {heroImages.length>1&&<div className="hero-dots absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">{heroImages.map((_,index)=><button key={index} onClick={()=>setHeroIndex(index)} aria-label={`عرض صورة الهيرو ${index+1}`} className={index===heroIndex?'is-active':''}/>)}</div>}
         </div>
         <div className="benefit-strip premium-benefits relative z-20 mx-3 -mt-8 grid grid-cols-2 overflow-hidden rounded-[1.7rem] md:mx-12 md:grid-cols-4">
           {[{icon:Leaf,title:'مختارة بعناية',text:'منتجات أصلية'},{icon:ShieldCheck,title:'جودة موثوقة',text:'مصادر معتمدة'},{icon:Truck,title:'توصيل سريع',text:'إلى جميع المحافظات'},{icon:RefreshCw,title:'خدمة مرنة',text:'استبدال سهل'}].map(({icon:Icon,title,text},i)=><motion.div initial={{opacity:0,y:14}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}} key={title} className="flex items-center gap-3 p-4 md:p-5"><span className="benefit-icon grid h-11 w-11 shrink-0 place-items-center rounded-2xl"><Icon size={21}/></span><span><b className="block text-sm text-[#17466f]">{title}</b><small className="text-slate-500">{text}</small></span></motion.div>)}
