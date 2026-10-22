@@ -128,8 +128,8 @@ export default function Home() {
       <button onClick={()=>setCartOpen(true)} className="relative mr-auto grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#0b4b84] text-white md:mr-0 md:h-11 md:w-11" aria-label="السلة"><ShoppingBag size={20}/>{count>0&&<span className="absolute -left-2 -top-2 grid h-6 min-w-6 place-items-center rounded-full bg-[#168bc5] px-1 text-xs font-bold">{count}</span>}</button>
     </div><div className="mobile-search-wrap mx-auto max-w-7xl px-3 pb-3 md:hidden"><div className="relative"><Search className="absolute right-4 top-1/2 -translate-y-1/2 text-[#168bc5]" size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن منتج..." aria-label="البحث عن منتج" className="mobile-search-input w-full rounded-2xl py-3 pr-11 pl-4 outline-none"/></div></div></header>
     {view==='store'?<>
-      <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero mx-auto max-w-7xl px-4 pt-5 md:px-8 md:pt-8">
-        <div className="hero-panel premium-hero relative overflow-hidden rounded-[2.4rem] bg-[#062b68]">
+      <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero w-full">
+        <div className="hero-panel premium-hero relative overflow-hidden bg-[#062b68]">
           <div className="hero-slides absolute inset-0" aria-hidden="true">{heroImages.map((image,index)=><img key={image} src={image} alt="" width="1600" height="900" loading={index===0?'eager':'lazy'} fetchPriority={index===0?'high':'auto'} decoding="async" className={`hero-slide ${index===heroIndex?'is-active':''}`}/>)}</div>
           {heroImages.length>1&&<div className="hero-dots absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">{heroImages.map((_,index)=><button key={index} onClick={()=>setHeroIndex(index)} aria-label={`عرض صورة الهيرو ${index+1}`} className={index===heroIndex?'is-active':''}/>)}</div>}
         </div>
