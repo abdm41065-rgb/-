@@ -85,6 +85,7 @@ export default function Home() {
   const [selected,setSelected] = useState<Product|null>(null);
   const [adminOpen,setAdminOpen] = useState(false); const [notice,setNotice] = useState('');
   const [chatOpen,setChatOpen] = useState(false);
+  const [heroSearchOpen,setHeroSearchOpen] = useState(false);
   const [policy,setPolicy]=useState<Policy>(null);
   const [heroIndex,setHeroIndex]=useState(0);
   const [,setBrandTaps]=useState(0);
@@ -119,18 +120,22 @@ export default function Home() {
   const total=cartItems.reduce((s,x)=>s+x.product.price*x.qty,0); const count=Object.values(cart).reduce((a,b)=>a+b,0);
   const add=(id:string)=>{const product=products.find(p=>p.id===id);if(!product||product.stock<1){setNotice('هذا المنتج غير متوفر حاليًا');return}setCart(c=>({...c,[id]:Math.min(product.stock,(c[id]||0)+1)}));setNotice('تمت إضافة المنتج إلى السلة')};
   return <main dir="rtl" className="premium-shell min-h-screen text-[#0a315c]">
-    <header className="premium-header sticky top-0 z-40"><div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-3 md:h-20 md:gap-4 md:px-8">
-      <button onClick={()=>setAdminOpen(!adminOpen)} className="md:hidden" aria-label="القائمة"><Menu/></button>
-      <button onClick={()=>{setView('store');setBrandTaps(n=>{const next=n+1;if(next>=6){setView('admin');setCategory('الكل');setQuery('');setAdminOpen(false);return 0}return next})}} className="flex min-w-0 items-center gap-2 md:gap-3"><img src="/hayat-almajd-logo-small.png" width="160" height="160" alt="شعار صيدلية حياة المجد" className="h-11 w-11 shrink-0 rounded-full border border-[#bfdbfe]/30 bg-white object-cover shadow-sm md:h-14 md:w-14"/><span className="min-w-0 text-right leading-tight"><b className="block whitespace-nowrap text-sm md:text-lg">صيدلية حياة المجد</b><small className="hidden whitespace-nowrap text-[#168bc5] sm:block">عناية تثق بها</small></span></button>
-      <div className="relative mx-auto hidden w-full max-w-lg md:block"><Search className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-400" size={19}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن منتج..." className="w-full rounded-2xl border border-blue-100 bg-blue-50/60 py-3 pr-12 pl-4 outline-none focus:border-blue-400"/></div>
-      <nav className={`${adminOpen?'flex':'hidden'} absolute right-4 top-20 flex-col gap-2 rounded-2xl bg-white p-3 shadow-xl md:static md:flex md:flex-row md:bg-transparent md:p-0 md:shadow-none`}><button onClick={()=>{setView('store');setAdminOpen(false)}} className={`rounded-xl px-4 py-2 font-bold ${view==='store'?'bg-blue-50 text-[#087cc1]':''}`}>المتجر</button></nav>
-      {view==='store'&&<ImageSearch onChoose={product=>{setProducts(current=>current.some(item=>item.id===product.id)?current:[product,...current]);setSelected(product)}}/>}
-      <button onClick={()=>setCartOpen(true)} className="relative mr-auto grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#0b4b84] text-white md:mr-0 md:h-11 md:w-11" aria-label="السلة"><ShoppingBag size={20}/>{count>0&&<span className="absolute -left-2 -top-2 grid h-6 min-w-6 place-items-center rounded-full bg-[#168bc5] px-1 text-xs font-bold">{count}</span>}</button>
-    </div><div className="mobile-search-wrap mx-auto max-w-7xl px-3 pb-3 md:hidden"><div className="relative"><Search className="absolute right-4 top-1/2 -translate-y-1/2 text-[#168bc5]" size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن منتج..." aria-label="البحث عن منتج" className="mobile-search-input w-full rounded-2xl py-3 pr-11 pl-4 outline-none"/></div></div></header>
     {view==='store'?<>
       <motion.section initial={reduceMotion?{opacity:0}:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.75,ease:[.22,1,.36,1]}} className="storefront-hero w-full">
         <div className="hero-panel premium-hero relative overflow-hidden bg-[#062b68]">
           <div className="hero-slides absolute inset-0" aria-hidden="true">{heroImages.map((image,index)=><img key={image} src={image} alt="" width="1600" height="900" loading={index===0?'eager':'lazy'} fetchPriority={index===0?'high':'auto'} decoding="async" className={`hero-slide ${index===heroIndex?'is-active':''}`}/>)}</div>
+          <button className="hero-hotspot hero-logo" aria-label="الرئيسية" onClick={()=>{setView('store');setBrandTaps(n=>{const next=n+1;if(next>=6){setView('admin');return 0}return next})}}/>
+          <button className="hero-hotspot hero-nav-products" aria-label="المنتجات" onClick={()=>document.getElementById('products')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-nav-services" aria-label="الخدمات" onClick={()=>document.querySelector('.benefit-strip')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-nav-brands" aria-label="العلامات التجارية" onClick={()=>document.querySelector('.campaign-gallery')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-nav-blog" aria-label="المدونة" onClick={()=>document.querySelector('.promo-wrap')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-search" aria-label="البحث" onClick={()=>setHeroSearchOpen(v=>!v)}/>
+          <button className="hero-hotspot hero-cart" aria-label="السلة" onClick={()=>setCartOpen(true)}/>
+          <button className="hero-hotspot hero-account" aria-label="المساعد" onClick={()=>setChatOpen(true)}/>
+          <button className="hero-hotspot hero-menu" aria-label="القائمة" onClick={()=>document.querySelector('.reference-categories')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-shop-now" aria-label="تسوق الآن" onClick={()=>document.getElementById('products')?.scrollIntoView({behavior:'smooth'})}/>
+          <button className="hero-hotspot hero-discover" aria-label="اكتشف منتجاتنا" onClick={()=>document.querySelector('.reference-categories')?.scrollIntoView({behavior:'smooth'})}/>
+          {heroSearchOpen&&<div className="hero-search-panel"><Search size={20}/><input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن منتج..." aria-label="البحث عن منتج"/><button onClick={()=>setHeroSearchOpen(false)} aria-label="إغلاق البحث"><X size={18}/></button></div>}
           {heroImages.length>1&&<div className="hero-dots absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">{heroImages.map((_,index)=><button key={index} onClick={()=>setHeroIndex(index)} aria-label={`عرض صورة الهيرو ${index+1}`} className={index===heroIndex?'is-active':''}/>)}</div>}
         </div>
         <div className="benefit-strip premium-benefits relative z-20 mx-3 -mt-8 grid grid-cols-2 overflow-hidden rounded-[1.7rem] md:mx-12 md:grid-cols-4">
