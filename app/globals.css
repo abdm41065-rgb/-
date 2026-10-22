@@ -21,9 +21,9 @@ img { display:block; }
 .premium-header input { background:rgba(233,243,253,.72); border-color:rgba(143,187,225,.25); box-shadow:inset 0 1px 0 rgba(255,255,255,.75); }
 .mobile-search-input { border:1px solid rgba(120,177,221,.28);background:rgba(255,255,255,.78)!important;box-shadow:0 10px 28px rgba(7,55,94,.07),inset 0 1px 0 white!important;backdrop-filter:blur(18px); }
 .mobile-search-input:focus { border-color:rgba(8,124,193,.55);box-shadow:0 12px 32px rgba(7,87,145,.12),0 0 0 3px rgba(14,141,208,.09)!important; }
-.premium-hero { isolation:isolate; width:100%; aspect-ratio:16/9; min-height:0!important; border:0; border-radius:0!important; box-shadow:0 28px 70px rgba(10,58,98,.14); }
+.premium-hero { isolation:isolate; width:100%; aspect-ratio:16/10; min-height:0!important; border:0; border-radius:0!important; box-shadow:0 28px 70px rgba(10,58,98,.14); }
 .hero-slides { background:#062b68; }
-.hero-slide { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transform:scale(1.015);transition:opacity 1s ease,transform 7s ease; }
+.hero-slide { position:absolute;inset:0;width:100%;height:100%;object-fit:fill;object-position:center;opacity:0;transform:scale(1.015);transition:opacity 1s ease,transform 7s ease; }
 .hero-slide.is-active { opacity:1;transform:scale(1); }
 .hero-hotspot { position:absolute;z-index:25;border:0;border-radius:.75rem;background:transparent;color:transparent;transition:background .2s ease,box-shadow .2s ease; }
 .hero-hotspot:hover { background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.34); }
@@ -127,7 +127,8 @@ img { display:block; }
 @media (max-width:640px) {
   .storefront-hero { padding:0; }
   .hero-panel { min-height:0; border-radius:0; background:#062b68; }
-  .hero-slide { height:100%; object-fit:contain; object-position:center; }
+  .premium-hero { aspect-ratio:16/11; }
+  .hero-slide { height:100%; object-fit:fill; object-position:center; }
   .hero-hotspot { border-radius:.4rem; }
   .hero-logo { left:3%;top:0;width:23%;height:17%; }
   .hero-nav-products { left:32%;top:0;width:10%;height:14%; }
